@@ -6,6 +6,7 @@ import django
 from sys import path
 from os.path import dirname
 from os import environ
+
 project = "django-adminlink"
 copyright = "2025, Willem Van Onsem"
 author = "Willem Van Onsem"
