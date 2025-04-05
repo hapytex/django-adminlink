@@ -138,3 +138,4 @@ jobs:
       with:
         password: ${{ secrets.PYPI_TOKEN }}
         attestations: false
+        verbose: true
