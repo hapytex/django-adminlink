@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = [{name = "Willem Van Onsem", email = "yourfriends@hapytex.eu"}]
 
 [build-system]
-requires = ['setuptools<69.0', 'wheel', 'setuptools_scm[toml]>=6.2']
+requires = ['setuptools>38.6.0,<69.0', 'wheel', 'setuptools_scm[toml]>=6.2']
 build-backend = 'setuptools.build_meta:__legacy__'
 
 [tool.setuptools_scm]
