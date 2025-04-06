@@ -49,3 +49,7 @@ class LinkFieldAdminMixin:
         else:
             # use the field name instead, so use the old way
             return field.name
+
+
+class LinkFieldAdmin(LinkFieldAdminMixin, admin.ModelAdmin):
+    pass
