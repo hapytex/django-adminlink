@@ -115,9 +115,7 @@ jobs:
         python -m setuptools_scm
         python setup.py sdist bdist_wheel
     - name: Publish package
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository_url: https://test.pypi.org/legacy/
+      uses: pypa/gh-action-pypi-publish@3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f
 
   publish:
     runs-on: ubuntu-latest
