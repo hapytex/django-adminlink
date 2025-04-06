@@ -1,5 +1,8 @@
 name: django-adminlink CI
 on: push
+permissions:
+  contents: read
+  id-token: write
 jobs:
   black:
     runs-on: ubuntu-latest
