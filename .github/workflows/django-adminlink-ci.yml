@@ -115,7 +115,9 @@ jobs:
         python -m setuptools_scm
         python setup.py sdist bdist_wheel
     - name: Publish package
-      uses: pypa/gh-action-pypi-publish@3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f
+      uses: pypa/gh-action-pypi-publish@latest
+      with:
+        verbose: true
 
   publish:
     runs-on: ubuntu-latest
@@ -131,6 +133,6 @@ jobs:
         python -m setuptools_scm
         python setup.py sdist bdist_wheel
     - name: Publish package
-      uses: pypa/gh-action-pypi-publish@release/v1
+      uses: pypa/gh-action-pypi-publish@latest
       with:
         verbose: true
