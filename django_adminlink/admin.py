@@ -7,6 +7,7 @@ from django.utils.html import format_html
 
 class LinkFieldAdminMixin:
     admin_site_to_link = None
+    admin_url_namespace = 'admin'
 
     def _convert_list_display_item(self, field_name):
         if isinstance(field_name, str):
@@ -32,7 +33,10 @@ class LinkFieldAdminMixin:
         admin_site = self.admin_site_to_link or admin.site
         model_admin = admin_site._registry.get(related_model)
         if model_admin is not None:
-            url_root = f"admin:{related_model._meta.app_label}_{related_model._meta.model_name}_change"
+            url_root = f"related_model._meta.app_label}_{related_model._meta.model_name}_change"
+            if self.admin_url_namespace:
+                # prefix with namespace
+                url_root = f'{self.admin_url_namespace}:{url_root}'
 
             @admin.display(description=field.name, ordering=f"{field.name}")
             def column_render(obj):
