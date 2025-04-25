@@ -1,10 +1,11 @@
+import json
+
 from django.contrib import admin
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models
+from django.forms import Media
 from django.urls import reverse
 from django.utils.html import format_html_join
-from django.forms import Media
-import json
 
 
 class LinkFieldAdminMixin:
@@ -71,13 +72,17 @@ class SingleItemActionMixin:
         else:
             action_buttons = [(x, x) for x in self.action_buttons]
         return format_html_join(
-            '',
+            "",
             '<button type="button" onclick="get_checkboxes({}, {})">{}</button>',
-            [(json.dumps(item), json.dumps(str(obj.pk)), label)
-            for label, item in action_buttons]
+            [
+                (json.dumps(item), json.dumps(str(obj.pk)), label)
+                for label, item in action_buttons
+            ],
         )
 
+    def get_list_display(self, request):
+        return [*super().get_list_display(request), self.action_button_column]
 
     @property
     def media(self):
-        return super().media + Media(js=['/static/js/single_admin_action.js'])
+        return super().media + Media(js=["/static/js/single_admin_action.js"])
