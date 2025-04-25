@@ -1,5 +1,3 @@
-import json
-
 from django.contrib import admin
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models
@@ -73,11 +71,8 @@ class SingleItemActionMixin:
             action_buttons = [(x, x) for x in self.action_buttons]
         return format_html_join(
             "",
-            '<button type="button" onclick="get_checkboxes({}, {})">{}</button>',
-            [
-                (json.dumps(item), json.dumps(str(obj.pk)), label)
-                for label, item in action_buttons
-            ],
+            '<button type="button" data-action="{}" data-pk="{}" onclick="get_checkboxes(this)">{}</button>',
+            [(item, str(obj.pk), label) for label, item in action_buttons],
         )
 
     def get_list_display(self, request):
