@@ -71,13 +71,19 @@ class SingleItemActionMixin:
             action_buttons = [(x, x) for x in self.action_buttons]
         return format_html_join(
             "",
-            '<button type="button" data-action="{}" data-pk="{}" onclick="get_checkboxes(this)">{}</button>',
-            [(item, str(obj.pk), label) for label, item in action_buttons],
+            '<button type="button" class="button button-action-{}" data-action="{}" data-pk="{}" onclick="get_checkboxes(this)">{}</button>',
+            [(item, item, str(obj.pk), label)
+             for label, item in action_buttons],
         )
 
     def get_list_display(self, request):
-        return [*super().get_list_display(request), self.action_button_column]
+        items = super().get_list_display(request)
+        if self.action_buttons:
+            return [*items, self.action_button_column]
+        else:
+            # if no action buttons are used, we can simply drop the column
+            return items
 
     @property
     def media(self):
-        return super().media + Media(js=["/static/js/single_admin_action.js"])
+        return super().media + Media(js=["js/single_admin_action.js"])

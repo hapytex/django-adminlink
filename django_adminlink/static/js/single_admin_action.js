@@ -5,6 +5,9 @@ function get_checkboxes(e) {
     if(actionSelector == null) {
         return;
     }
+    for(const acrossInput of document.querySelectorAll('div.actions input.select-across')) {
+        acrossInput.value = 0;
+    }
     actionSelector.value = action;
     for(const item of document.querySelectorAll('input.action-select[type=checkbox]')) {
       item.checked = false;
