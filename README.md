@@ -19,6 +19,20 @@ You can install the package with:
 pip install django-adminlink
 ```
 
+You do *not* need to add `'django_adminlink'` to the `INSTALLED_APPS` settings *unless*, you use the `SingleItemActionMixin` or a derived product from it, since then
+you need to make use of the `static/js/single_admin_action.js` file that ships with it. So then the `INSTALLED_APPS` looks like:
+
+```python3
+# settings.py
+
+# …
+
+INSTALLED_APPS = [
+    # …,
+    'django_adminlink'
+]
+```
+
 ## Usage
 
 Once the package is installed, we can work with the mixins provided by the package.

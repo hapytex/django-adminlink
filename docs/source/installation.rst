@@ -8,5 +8,5 @@ The package can be fetched as `django-adminlink`, so for example with `pip` with
    
    pip3 install django-adminlink
 
-The item is not a Django app, so one should *not* to include it in the `INSTALLED_APPS`. It is only a module that
-offers some functionality to use in Django applications.
+The item is a Django app, but you do not per se have to install it as such. If you don't make use of the `SingleItemActionMixin`,
+you don't need to add `'django_adminlink'` to the `INSTALLED_APPS`, otherwise you need to do this to include the static file.
