@@ -72,8 +72,7 @@ class SingleItemActionMixin:
         return format_html_join(
             "",
             '<button type="button" class="button button-action-{}" data-action="{}" data-pk="{}" onclick="get_checkboxes(this)">{}</button>',
-            [(item, item, str(obj.pk), label)
-             for label, item in action_buttons],
+            [(item, item, str(obj.pk), label) for label, item in action_buttons],
         )
 
     def get_list_display(self, request):
