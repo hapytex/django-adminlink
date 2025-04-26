@@ -1,3 +1,10 @@
+/**
+ * Selects a single item in a Django admin list and triggers the specified admin action for that item.
+ *
+ * Retrieves the primary key and action from the provided element's data attributes, updates the action selector, unchecks all other items, checks the targeted item, and submits the form to perform the action on that item only.
+ *
+ * @param {Element} e - The element containing `data-pk` and `data-action` attributes for the target item and action.
+ */
 function get_checkboxes(e) {
     const pk = e.getAttribute('data-pk');
     const action = e.getAttribute('data-action');
