@@ -19,8 +19,9 @@ You can install the package with:
 pip install django-adminlink
 ```
 
-You do *not* need to add `'django_adminlink'` to the `INSTALLED_APPS` settings *unless*, you use the `SingleItemActionMixin` or a derived product from it, since then
-you need to make use of the `static/js/single_admin_action.js` file that ships with it. So then the `INSTALLED_APPS` looks like:
+You do *not* need to add `'django_adminlink'` to the `INSTALLED_APPS` settings *unless* you use the `SingleItemActionMixin` or a derived product from it. In that case,
+you need to make use of the `static/js/single_admin_action.js` file that ships with it. Then the `INSTALLED_APPS` looks like:
+
 
 ```python3
 # settings.py
@@ -70,7 +71,7 @@ class MovieAdmin(SingleItemActionMixin, admin.ModelAdmin):
 
 One can work with a dictionary that has as key the "label" of the button, and as value the name (key) of the action to work with. This will add a button with the label "delete" as last column. When clicked, that row, and only that row is then removed.
 
-The package does not perform the action itself: it works with a small amount of *JavaScript* that just disables all checkboxes, enables the one of the selected row, and finally submits the action form, and lets Django handle the logic further.
+The package does not perform the action itself: it works with a small amount of *JavaScript* that just disables all checkboxes, enables only the checkbox of the selected row, and finally submits the action form, letting Django handle the rest of the logic.
 
 If the label(s) and action(s) are the same, one can also work with a list of the names of the actions, like:
 
