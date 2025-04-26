@@ -86,3 +86,7 @@ class SingleItemActionMixin:
     @property
     def media(self):
         return super().media + Media(js=["js/single_admin_action.js"])
+
+
+class SingleItemActionAdmin(SingleItemActionMixin, admin.ModelAdmin):
+    pass
