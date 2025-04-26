@@ -3,7 +3,7 @@ from django.core.exceptions import FieldDoesNotExist
 from django.db import models
 from django.forms import Media
 from django.urls import reverse
-from django.utils.html import format_html_join
+from django.utils.html import format_html, format_html_join
 
 
 class LinkFieldAdminMixin:
