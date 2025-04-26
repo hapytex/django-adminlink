@@ -13,7 +13,7 @@ class LinkFieldAdminMixin:
     def _convert_list_display_item(self, field_name):
         """
         Converts a list display field name to a callable that renders a link for ForeignKey fields.
-        
+
         If the specified field is a ForeignKey, returns a callable that displays the related object as a clickable link to its admin change page. Otherwise, returns the original field name.
         """
         if isinstance(field_name, str):
@@ -37,7 +37,7 @@ class LinkFieldAdminMixin:
     def _link_to_model_field(self, field):
         """
         Returns a callable that renders a ForeignKey field as a clickable link to the related object's admin change page.
-        
+
         If the related model is not registered with the admin site, returns the field name instead.
         """
         related_model = field.related_model
@@ -53,10 +53,10 @@ class LinkFieldAdminMixin:
             def column_render(obj):
                 """
                 Renders a foreign key field as a clickable link to the related object's admin change page.
-                
+
                 Args:
                     obj: The model instance containing the foreign key field.
-                
+
                 Returns:
                     An HTML anchor element linking to the related object's admin page, or None if the field is not set.
                 """
@@ -86,7 +86,7 @@ class SingleItemActionMixin:
     def action_button_column(self, obj):
         """
         Renders action buttons for each object in the admin list display.
-        
+
         Each button is configured with data attributes for the action name and object primary key,
         and triggers the `get_checkboxes` JavaScript function when clicked.
         """
@@ -103,7 +103,7 @@ class SingleItemActionMixin:
     def get_list_display(self, request):
         """
         Extends the list display to include a column of action buttons if any are defined.
-        
+
         If the `action_buttons` attribute is set, appends the `action_button_column` to the list
         display; otherwise, returns the default list display.
         """
@@ -118,7 +118,7 @@ class SingleItemActionMixin:
     def media(self):
         """
         Extends the admin media to include JavaScript for single-item action buttons.
-        
+
         Returns:
             The combined media object with the additional JavaScript file included.
         """
