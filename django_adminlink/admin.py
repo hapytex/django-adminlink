@@ -1,4 +1,7 @@
+from collections import defaultdict
+
 from django.contrib import admin
+from django.contrib.admin.utils import model_format_dict
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models
 from django.forms import Media
@@ -126,4 +129,37 @@ class SingleItemActionMixin:
 
 
 class SingleItemActionAdmin(SingleItemActionMixin, admin.ModelAdmin):
+    pass
+
+
+def grouped_action(
+    function=None, *, permissions=None, description=None, action_group=None
+):
+    if function is None:
+        base_decorator = admin.action(permissions=permissions, description=description)
+
+        def decorator(func):
+            func = base_decorator(func)
+            func.action_group = action_group
+            return func
+
+        return decorator
+    else:
+        function = admin.action(function)
+        function.action_group = action_group
+        return function
+
+
+class GroupedActionAdminMixin:
+    def get_action_choices(self, request, default_choices=models.BLANK_CHOICE_DASH):
+        grouped_items = defaultdict(list)
+        grouped_items[None].extend(default_choices)
+        for func, name, description in self.get_actions(request).values():
+            group = getattr(func, "action_group", None)
+            choice = (name, description % model_format_dict(self.opts))
+            grouped_items[group].append(choice)
+        return [(k, v) for k, v in grouped_items.items()]
+
+
+class GroupedActionAdmin(SingleItemActionMixin, admin.ModelAdmin):
     pass
