@@ -86,7 +86,7 @@ class MovieAdmin(SingleItemActionMixin, admin.ModelAdmin):
 
 ## Grouping actions
 
-The list of actions is "flat". We can add item groups, just like in other Django `ChoiceField`s. For this we introduced the `GroupedActionAdminMixin`.
+The list of actions is "flat". We can add item groups, just like in other Django `ChoiceField`s. For this, we introduced the `GroupedActionAdminMixin`.
 
 This mixin looks at the actions. We also defined a `@grouped_action` decorator, which does approximately the same as the `@admin.action` decorator, except with an extra parameter `action_group=…`.
 
@@ -113,4 +113,4 @@ class MovieAdmin(GroupedActionAdminMixin, admin.ModelAdmin):
       # …
 ```
 
-The order of the groups is determined by the order of the indivual actions: the first action for that group for each group determines how the groups are listed.
+The order of the groups is determined by the order of the individual actions: the first action for that group for each group determines how the groups are listed.

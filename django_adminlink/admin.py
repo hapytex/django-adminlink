@@ -144,10 +144,9 @@ def grouped_action(
             return func
 
         return decorator
-    else:
-        function = admin.action(function)
-        function.action_group = action_group
-        return function
+    function = admin.action(function)
+    function.action_group = action_group
+    return function
 
 
 class GroupedActionAdminMixin:
@@ -158,7 +157,7 @@ class GroupedActionAdminMixin:
             group = getattr(func, "action_group", None)
             choice = (name, description % model_format_dict(self.opts))
             grouped_items[group].append(choice)
-        return [(k, v) for k, v in grouped_items.items()]
+        return list(grouped_items.items())
 
 
 class GroupedActionAdmin(SingleItemActionMixin, admin.ModelAdmin):
