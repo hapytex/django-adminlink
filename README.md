@@ -83,3 +83,34 @@ from django_adminlink.admin import SingleItemActionMixin
 class MovieAdmin(SingleItemActionMixin, admin.ModelAdmin):
     action_buttons = ['delete_selected']
 ```
+
+## Grouping actions
+
+The list of actions is "flat". We can add item groups, just like in other Django `ChoiceField`s. For this, we introduced the `GroupedActionAdminMixin`.
+
+This mixin looks at the actions. We also defined a `@grouped_action` decorator, which does approximately the same as the `@admin.action` decorator, except with an extra parameter `action_group=…`.
+
+We can register actions like:
+
+```python3
+from django.contrib import admin
+from django_adminlink.admin import GroupedActionAdminMixin, grouped_action
+
+@admin.register(Movie)
+class MovieAdmin(GroupedActionAdminMixin, admin.ModelAdmin):
+    action_buttons = ['star', 'unstar', 'clear_comments']
+    
+    @grouped_action(description='star item', action_group='stars')
+    def star(self, request, queryset):
+      # …
+    
+    @grouped_action(description='unstar item', action_group='stars')
+    def unstar(self, request, queryset):
+      # …
+    
+    @grouped_action(description='clear comments', action_group='comments')
+    def clear_comments(self, request, queryset):
+      # …
+```
+
+The order of the groups is determined by the order of the individual actions: the first action for that group for each group determines how the groups are listed.
