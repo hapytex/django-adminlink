@@ -11,8 +11,8 @@ project = "django-adminlink"
 copyright = "2025, Willem Van Onsem"
 author = "Willem Van Onsem"
 
-release = "0.2.0"
-version = "0.2.0"
+release = "0.3.0"
+version = "0.3.0"
 
 
 path.insert(0, dirname(dirname(dirname(__file__))))
