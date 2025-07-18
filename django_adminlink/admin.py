@@ -162,3 +162,29 @@ class GroupedActionAdminMixin:
 
 class GroupedActionAdmin(SingleItemActionMixin, admin.ModelAdmin):
     pass
+
+
+class ChoiceListFilter(admin.SimpleListFilter):
+    choices = {}
+    
+    def lookups(self, request, model_admin):
+        return [
+            (k, v) for k, (v, *__) in self.choices.items()
+        ]
+    
+    def queryset(self, request, queryset):
+        val = self.choices.get(self.value())
+        if val and len(val) >= 2:
+            __, cond, *__ = val
+            return queryset.filter(cond)
+        return queryset
+
+
+def adminfilter_factory(parameter_name, choices, verbose_name=None):
+    default_verbose_name = parameter_name.replace('_', ' ')
+    if verbose_name is None:
+        verbose_name = default_verbose_name.capitalize()
+    class_name = default_verbose_name.title().replace(' ', '')
+    if not isinstance(choices, dict):
+        choices = {k: vs for for k, *vs in choices}
+    return type(f'{class_name}Filter', (admin.ChoiceListFilter,), {'title': verbose_name, 'parameter_name': parameter_name, 'choices': choices})

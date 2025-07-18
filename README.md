@@ -114,3 +114,38 @@ class MovieAdmin(GroupedActionAdminMixin, admin.ModelAdmin):
 ```
 
 The order of the groups is determined by the order of the individual actions: the first action for that group for each group determines how the groups are listed.
+
+## Simpler `SimpleListFilter`s
+
+Django allows to add extra filters on the Django admin, but even with a `SimpleListFilter`, there are cumbersome to make. We define a `ChoiceListFilter` which can be
+used to make these based on a dictionary, and add a function `adminfilter_factory(..)` to define such classes in a more covenient way.
+
+Once can define such simple list filter by working with a dict like:
+
+```
+from django.db.models import Q
+from django.db.modles.functions import Now
+
+class ArchiveStatusFilter(ChoiceListFilter):
+    title = 'Archive status'
+    parameter_name = 'archive_status'
+    choices = {
+      'active': ('Active', ~Q(archived_at__lte=Now()))
+      'archived': ('Archived', Q(archived_at__lte=Now()))
+    }
+```
+
+so a dictionary that maps the key of the filter on a 2-tuple with the verbose name as first item, and the Django filter (a `Q` object) as second one. Because it is a dictionary, it is also imppsible to specify the same key twice.
+
+We can also define this with the `adminfilter_factory(..)` as follows:
+
+
+```
+ARCHIVE_OPTIONS = [
+    ('active', 'Active', ~Q(archived_at__lte=Now())),
+    ('archived', 'Archived', Q(archived_at__lte=Now()))
+]
+ArchiveStatusFilter = adminfilter_factory('archive_status', ARCHIVE_OPTIONS)
+```
+
+here we can use the same dictionary structure, or any iterable of items with at least three items.
