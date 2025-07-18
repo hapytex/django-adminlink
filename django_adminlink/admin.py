@@ -187,6 +187,6 @@ def adminfilter_factory(parameter_name, choices, verbose_name=None):
         choices = {k: vs for k, *vs in choices}
     return type(
         f"{class_name}Filter",
-        (admin.ChoiceListFilter,),
+        (ChoiceListFilter,),
         {"title": verbose_name, "parameter_name": parameter_name, "choices": choices},
     )
