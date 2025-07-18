@@ -142,6 +142,9 @@ We can also define this with the `adminfilter_factory(..)` as follows:
 
 
 ```python3
+from django.db.models import Q
+from django_adminlink.admin import adminfilter_factory
+
 ARCHIVE_OPTIONS = [
     ('active', 'Active', ~Q(archived_at__lte=Now())),
     ('archived', 'Archived', Q(archived_at__lte=Now()))
