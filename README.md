@@ -117,30 +117,31 @@ The order of the groups is determined by the order of the individual actions: th
 
 ## Simpler `SimpleListFilter`s
 
-Django allows to add extra filters on the Django admin, but even with a `SimpleListFilter`, there are cumbersome to make. We define a `ChoiceListFilter` which can be
-used to make these based on a dictionary, and add a function `adminfilter_factory(..)` to define such classes in a more covenient way.
+Django allows to add extra filters on the Django admin, but even with a `SimpleListFilter`, they are cumbersome to make. We define a `ChoiceListFilter` which can be
+used to make these based on a dictionary, and add a function `adminfilter_factory(..)` to define such classes in a more convenient way.
 
 Once can define such simple list filter by working with a dict like:
 
-```
+```python3
 from django.db.models import Q
-from django.db.modles.functions import Now
+from django.db.models.functions import Now
+from django_adminlink.admin import ChoiceListFilter
 
 class ArchiveStatusFilter(ChoiceListFilter):
     title = 'Archive status'
     parameter_name = 'archive_status'
     choices = {
-      'active': ('Active', ~Q(archived_at__lte=Now()))
+      'active': ('Active', ~Q(archived_at__lte=Now())),
       'archived': ('Archived', Q(archived_at__lte=Now()))
     }
 ```
 
-so a dictionary that maps the key of the filter on a 2-tuple with the verbose name as first item, and the Django filter (a `Q` object) as second one. Because it is a dictionary, it is also imppsible to specify the same key twice.
+so a dictionary that maps the key of the filter on a 2-tuple with the verbose name as first item, and the Django filter (a `Q` object) as second one. Because it is a dictionary, it is also impossible to specify the same key twice.
 
 We can also define this with the `adminfilter_factory(..)` as follows:
 
 
-```
+```python3
 ARCHIVE_OPTIONS = [
     ('active', 'Active', ~Q(archived_at__lte=Now())),
     ('archived', 'Archived', Q(archived_at__lte=Now()))
